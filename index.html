@@ -53,14 +53,17 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:"Microsoft YaHei",s
 .victory-btn{padding:15px 40px;margin:10px;font-size:20px;background:#ffd700;color:#000;border:none;border-radius:8px;cursor:pointer;}
 
 /* Mobile Control Joystick - 增大尺寸提高操控性 */
-#joystickArea{position:absolute;bottom:30px;left:30px;width:150px;height:150px;pointer-events:auto;}
-#joystickBase{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:130px;height:130px;border-radius:50%;background:rgba(255,255,255,0.15);border:3px solid rgba(80,208,255,0.6);backdrop-filter:blur(5px);}
-#joystickHandle{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:70px;height:70px;border-radius:50%;background:rgba(80,208,255,0.7);border:3px solid rgba(255,255,255,0.9);box-shadow:0 0 25px rgba(80,208,255,0.6);transition:transform 0.05s ease-out;}
+#joystickArea{position:absolute;bottom:20px;left:20px;width:140px;height:140px;pointer-events:auto;z-index:50;}
+#joystickBase{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:120px;height:120px;border-radius:50%;background:rgba(0,0,0,0.6);border:3px solid rgba(80,208,255,0.6);backdrop-filter:blur(5px);box-shadow:0 0 20px rgba(0,0,0,0.5);}
+#joystickHandle{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:65px;height:65px;border-radius:50%;background:rgba(80,208,255,0.7);border:3px solid rgba(255,255,255,0.9);box-shadow:0 0 25px rgba(80,208,255,0.6);transition:transform 0.05s ease-out;}
 
 /* Fire Button - 增大并优化视觉效果 */
-#fireBtnArea{position:absolute;bottom:30px;right:30px;pointer-events:auto;}
-#fireBtn{width:120px;height:120px;border-radius:50%;background:radial-gradient(circle, rgba(255,107,107,0.8) 0%, rgba(255,60,60,0.6) 100%);border:4px solid rgba(255,255,255,0.9);color:#fff;font-size:20px;font-weight:bold;display:flex;justify-content:center;align-items:center;box-shadow:0 0 30px rgba(255,107,107,0.6), inset 0 0 20px rgba(255,255,255,0.2);user-select:none;-webkit-user-select:none;touch-action:none;cursor:pointer;transition:transform 0.1s, box-shadow 0.1s;}
+#fireBtnArea{position:absolute;bottom:20px;right:20px;pointer-events:auto;z-index:50;}
+#fireBtn{width:110px;height:110px;border-radius:50%;background:radial-gradient(circle, rgba(255,107,107,0.8) 0%, rgba(255,60,60,0.6) 100%);border:4px solid rgba(255,255,255,0.9);color:#fff;font-size:18px;font-weight:bold;display:flex;justify-content:center;align-items:center;box-shadow:0 0 30px rgba(255,107,107,0.6), inset 0 0 20px rgba(255,255,255,0.2), 0 0 20px rgba(0,0,0,0.5);user-select:none;-webkit-user-select:none;touch-action:none;cursor:pointer;transition:transform 0.1s, box-shadow 0.1s;}
 #fireBtn:active, #fireBtn.active{transform:scale(0.92);box-shadow:0 0 40px rgba(255,107,107,0.9), inset 0 0 30px rgba(255,255,255,0.3);}
+
+/* 控制器区域背景 - 与游戏场景区分 */
+#controlsOverlay{position:absolute;bottom:0;left:0;right:0;height:170px;background:linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.4) 50%, transparent 100%);pointer-events:none;z-index:40;border-top:2px solid rgba(80,208,255,0.3);}
 
 /* Pause Button */
 #pauseBtn{position:absolute;top:10px;right:10px;width:50px;height:30px;background:rgba(0,0,0,0.6);color:#fff;border:1px solid #50d0ff;border-radius:5px;display:flex;justify-content:center;align-items:center;pointer-events:auto;cursor:pointer;}
@@ -117,6 +120,9 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:"Microsoft YaHei",s
   <div id="fireBtnArea">
     <div id="fireBtn">发射</div>
   </div>
+  
+  <!-- 控制器区域背景 - 与游戏场景区分 -->
+  <div id="controlsOverlay"></div>
 
   <!-- Pause Screen -->
   <div id="pauseScreen">
@@ -857,7 +863,7 @@ const enemyTypes = {
     speed: [2.5, 3.5],
     bulletDamage: 8,
     score: 100,
-    size: 0.8
+    size: 0.6 // 缩小尺寸
   },
   f35: {
     draw: drawEnemyF35,
@@ -865,7 +871,7 @@ const enemyTypes = {
     speed: [2.0, 3.0],
     bulletDamage: 10,
     score: 150,
-    size: 0.8
+    size: 0.6 // 缩小尺寸
   },
   f117: {
     draw: drawEnemyF117,
@@ -873,7 +879,7 @@ const enemyTypes = {
     speed: [1.8, 2.5],
     bulletDamage: 12,
     score: 200,
-    size: 0.8
+    size: 0.6 // 缩小尺寸
   },
   c17: {
     draw: drawEnemyC17,
@@ -881,7 +887,7 @@ const enemyTypes = {
     speed: [1.2, 1.8],
     bulletDamage: 15,
     score: 300,
-    size: 0.8
+    size: 0.6 // 缩小尺寸
   },
   b52: {
     draw: drawEnemyB52,
@@ -889,7 +895,7 @@ const enemyTypes = {
     speed: [1.0, 1.5],
     bulletDamage: 18,
     score: 400,
-    size: 0.8
+    size: 0.6 // 缩小尺寸
   },
   boss: {
     draw: drawBossSpaceX,
@@ -897,7 +903,7 @@ const enemyTypes = {
     speed: 0.8,
     bulletDamage: 25,
     score: 5000,
-    size: 0.6
+    size: 0.5 // 缩小Boss尺寸
   }
 };
 
@@ -958,8 +964,8 @@ class Player {
   constructor(x, y, canvasWidth, canvasHeight) {
     this.x = x;
     this.y = y;
-    this.width = 60;
-    this.height = 80;
+    this.width = 45;  // 缩小尺寸
+    this.height = 60; // 缩小尺寸
     this.maxHp = 100;
     this.hp = 100;
     this.speed = 5;
@@ -975,21 +981,22 @@ class Player {
   move(dx, dy) {
     this.x += dx * this.speed;
     this.y += dy * this.speed;
-    // 边界限制
+    // 边界限制 - 留出底部空间给控制按钮
     const halfW = this.width / 2;
     const halfH = this.height / 2;
     if (this.x - halfW < 0) this.x = halfW;
     if (this.x + halfW > this.canvasWidth) this.x = this.canvasWidth - halfW;
     if (this.y - halfH < 0) this.y = halfH;
-    if (this.y + halfH > this.canvasHeight) this.y = this.canvasHeight - halfH;
+    // 限制玩家不能超出屏幕下方控制区域
+    if (this.y + halfH > this.canvasHeight - 160) this.y = this.canvasHeight - 160 - halfH;
   }
 
   getBoundingBox() {
     return {
-      x: this.x - 25,
-      y: this.y - 40,
-      w: 50,
-      h: 80
+      x: this.x - 18,
+      y: this.y - 30,
+      w: 36,
+      h: 60
     };
   }
 
@@ -1531,9 +1538,25 @@ function checkCollisions() {
 function spawnEnemy() {
   const config = levelConfigs[selectedLevel];
   
-  if (enemiesSpawned >= config.totalEnemies) {
-    // 检查是否需要生成Boss
-    if (config.boss && !bossSpawned && enemies.length.filter(e => e.active).length === 0) {
+  // 如果还没生成完所有敌人
+  if (enemiesSpawned < config.totalEnemies) {
+    enemySpawnTimer++;
+    // 调整敌人生成间隔,随关卡增加但不会太夸张
+    const baseInterval = 70;
+    const levelModifier = selectedLevel * 4;
+    const spawnInterval = Math.max(baseInterval - levelModifier, 40); // 最小间隔40帧
+    
+    if (enemySpawnTimer > spawnInterval) {
+      enemySpawnTimer = 0;
+      enemies.push(new Enemy(selectedLevel, canvasWidth));
+      enemiesSpawned++;
+    }
+  }
+  
+  // 检查是否需要生成Boss(必须在所有普通敌人都生成完后)
+  if (config.boss && !bossSpawned && enemiesSpawned >= config.totalEnemies) {
+    // 等待所有普通敌人都被消灭后再生成Boss
+    if (enemies.length === 0 || enemies.every(e => !e.active)) {
       // 第五关Boss战切换Boss音乐
       if (selectedLevel === 5) {
         audioManager.switchToBossBgm();
@@ -1542,19 +1565,6 @@ function spawnEnemy() {
       enemies.push(boss);
       bossSpawned = true;
     }
-    return;
-  }
-  
-  enemySpawnTimer++;
-  // 调整敌人生成间隔,随关卡增加但不会太夸张
-  const baseInterval = 70;
-  const levelModifier = selectedLevel * 4;
-  const spawnInterval = Math.max(baseInterval - levelModifier, 40); // 最小间隔40帧
-  
-  if (enemySpawnTimer > spawnInterval) {
-    enemySpawnTimer = 0;
-    enemies.push(new Enemy(selectedLevel, canvasWidth));
-    enemiesSpawned++;
   }
 }
 
